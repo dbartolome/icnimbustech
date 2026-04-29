@@ -26,10 +26,12 @@ function corregirApiUrlLocal(configurada: string): string {
 }
 
 export function obtenerApiBaseUrl(): string {
+  // En navegador forzamos mismo origen para evitar CORS/mixed-content en producción.
+  if (typeof window !== "undefined") {
+    return "/api"
+  }
+
   const configurada = (process.env.NEXT_PUBLIC_API_URL ?? "").trim()
   if (configurada) return limpiarSlashFinal(corregirApiUrlLocal(configurada))
-  if (typeof window !== "undefined") {
-    return `${window.location.protocol}//${window.location.hostname}:8033`
-  }
   return "/api"
 }
