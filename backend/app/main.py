@@ -6,6 +6,7 @@ import asyncio
 import logging
 from contextlib import asynccontextmanager
 
+import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.types import ASGIApp, Receive, Scope, Send
@@ -65,6 +66,7 @@ async def ciclo_de_vida(app: FastAPI):
     await iniciar_pool()
     pool = await obtener_pool()
     await cargar_config_research_desde_db(pool)
+    await _warmup_ollama()
     tarea_scoring = asyncio.create_task(_job_scoring_periodico())
     yield
     tarea_scoring.cancel()
@@ -86,6 +88,45 @@ async def _job_scoring_periodico() -> None:
             logger.exception("Fallo en job periódico de scoring.")
 
         await asyncio.sleep(24 * 60 * 60)
+
+
+async def _warmup_ollama() -> None:
+    """
+    Calienta Ollama al arranque para reducir latencia de la primera interacción.
+    Fallo silencioso para no bloquear startup.
+    """
+    base = configuracion.OLLAMA_URL.rstrip("/")
+    payload = {
+        "model": configuracion.OLLAMA_MODEL_DEFAULT,
+        "prompt": "OK",
+        "stream": False,
+        "options": {"num_predict": 1},
+    }
+    try:
+        timeout = httpx.Timeout(12.0, connect=5.0)
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            for ep in ("/api/generate", "/api/chat"):
+                try:
+                    if ep == "/api/chat":
+                        r = await client.post(
+                            base + ep,
+                            json={
+                                "model": configuracion.OLLAMA_MODEL_DEFAULT,
+                                "stream": False,
+                                "messages": [{"role": "user", "content": "OK"}],
+                                "options": {"num_predict": 1},
+                            },
+                        )
+                    else:
+                        r = await client.post(base + ep, json=payload)
+                    if r.status_code < 500:
+                        logger.info("Warm-up Ollama completado vía %s", ep)
+                        return
+                except Exception:
+                    continue
+        logger.warning("Warm-up Ollama no completado; continuará bajo demanda.")
+    except Exception:
+        logger.warning("Warm-up Ollama falló al iniciar.")
 
 
 # =============================================================================

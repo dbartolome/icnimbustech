@@ -411,10 +411,16 @@ async def chat_streaming(
             endpoint_detectado = "/api/generate"
 
         # read=120s: VPS sin GPU puede tardar 60-90s en generar el primer token
-        timeout_stream = httpx.Timeout(connect=10.0, read=120.0, write=20.0, pool=10.0)
+        timeout_stream = httpx.Timeout(connect=10.0, read=90.0, write=20.0, pool=10.0)
+        max_tokens_local = 600
         async with httpx.AsyncClient(timeout=timeout_stream) as cliente:
             if endpoint_detectado == "/v1/chat/completions":
-                payload = {"model": effective_modelo, "stream": True, "messages": msgs_payload}
+                payload = {
+                    "model": effective_modelo,
+                    "stream": True,
+                    "messages": msgs_payload,
+                    "max_tokens": max_tokens_local,
+                }
                 async with cliente.stream("POST", base + endpoint_detectado, json=payload) as response:
                     response.raise_for_status()
                     async for linea in response.aiter_lines():
@@ -433,7 +439,12 @@ async def chat_streaming(
                             continue
 
             elif endpoint_detectado == "/api/chat":
-                payload = {"model": effective_modelo, "stream": True, "messages": msgs_payload}
+                payload = {
+                    "model": effective_modelo,
+                    "stream": True,
+                    "messages": msgs_payload,
+                    "options": {"num_predict": max_tokens_local},
+                }
                 async with cliente.stream("POST", base + endpoint_detectado, json=payload) as response:
                     response.raise_for_status()
                     async for linea in response.aiter_lines():
@@ -454,7 +465,13 @@ async def chat_streaming(
             else:  # /api/generate
                 system_txt = next((m["content"] for m in msgs_payload if m["role"] == "system"), "")
                 user_txt = " ".join(m["content"] for m in msgs_payload if m["role"] != "system")
-                payload = {"model": effective_modelo, "stream": True, "system": system_txt, "prompt": user_txt}
+                payload = {
+                    "model": effective_modelo,
+                    "stream": True,
+                    "system": system_txt,
+                    "prompt": user_txt,
+                    "options": {"num_predict": max_tokens_local},
+                }
                 async with cliente.stream("POST", base + endpoint_detectado, json=payload) as response:
                     response.raise_for_status()
                     async for linea in response.aiter_lines():

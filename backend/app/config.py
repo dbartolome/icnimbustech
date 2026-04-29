@@ -32,7 +32,7 @@ class Configuracion(BaseSettings):
 
     # IA local/privada (operación diaria)
     OLLAMA_URL: str = "http://76.13.9.183:32768"
-    OLLAMA_MODEL_DEFAULT: str = "qwen2.5:7b"
+    OLLAMA_MODEL_DEFAULT: str = "qwen2.5-coder:1.5b"
 
     # Transcripción de audio (faster-whisper: tiny | base | small | medium)
     WHISPER_MODELO: str = "tiny"

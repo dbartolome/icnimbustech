@@ -41,8 +41,8 @@ async def analizar_notas_cuenta(conexion: asyncpg.Connection, cuenta_id: UUID, u
         respuesta = await llamar_ia(
             mensajes=[{"role": "user", "content": prompt}],
             system="Responde en español de España. Sé directo. No incluyas PII.",
-            config=ConfigIA(proveedor="ollama", ollama_modelo="qwen2.5:14b"),
-            max_tokens=900,
+            config=ConfigIA(proveedor="ollama"),
+            max_tokens=500,
         )
         texto = respuesta.replace("```json", "").replace("```", "").strip()
         try:
@@ -118,8 +118,8 @@ async def generar_plan_mejora(conexion: asyncpg.Connection, usuario_id: UUID) ->
     respuesta = await llamar_ia(
         mensajes=[{"role": "user", "content": prompt}],
         system="Responde en español de España. Enfoca acciones concretas de ventas B2B.",
-        config=ConfigIA(proveedor="ollama", ollama_modelo="qwen2.5:14b"),
-        max_tokens=900,
+        config=ConfigIA(proveedor="ollama"),
+        max_tokens=500,
     )
 
     texto = respuesta.replace("```json", "").replace("```", "").strip()
