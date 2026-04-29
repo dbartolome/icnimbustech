@@ -1,0 +1,3 @@
+"""
+Módulo de seguimientos comerciales.
+"""

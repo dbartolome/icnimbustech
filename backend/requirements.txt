@@ -1,0 +1,50 @@
+# Framework
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+
+# Base de datos
+asyncpg==0.30.0
+
+# Validación y configuración
+pydantic[email]==2.10.3
+pydantic-settings==2.7.0
+
+# Autenticación
+python-jose[cryptography]==3.3.0
+bcrypt==4.2.1
+
+# IA
+anthropic==0.49.0
+openai==1.75.0
+
+# Importación de datos
+pandas==2.2.3
+openpyxl==3.1.5
+python-pptx==1.0.2
+reportlab==4.4.4
+python-multipart==0.0.20
+
+# Almacenamiento de ficheros (MinIO / S3-compatible)
+boto3==1.35.76
+
+# Plantillas de documentación
+jinja2==3.1.4
+
+# Extracción de texto para RAG
+pymupdf==1.24.14
+
+# Cache y rate limiting
+redis==5.2.1
+slowapi==0.1.9
+
+# Logging
+structlog==24.4.0
+
+# Audio TTS y transcripción
+edge-tts>=6.1.12
+faster-whisper>=1.0.3
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+httpx==0.28.1

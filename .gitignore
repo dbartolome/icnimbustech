@@ -1,0 +1,10 @@
+.env.hostinger
+.deploy_state/
+.DS_Store
+backend/uploads/
+backend/informes/
+backend/__pycache__/
+backend/.pytest_cache/
+frontend/.next/
+frontend/node_modules/
+frontend/tsconfig.tsbuildinfo

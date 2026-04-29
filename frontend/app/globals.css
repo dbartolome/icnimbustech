@@ -1,0 +1,439 @@
+@import "tailwindcss";
+
+:root {
+  --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Avenir Next Condensed", "Segoe UI Semibold", "Helvetica Neue", Arial, sans-serif;
+
+  /* Paleta SGS */
+  --color-sgs-rojo:  #C0001A;
+  --color-sgs-verde: #006A48;
+  --color-sgs-ambar: #7A5200;
+  --color-sgs-azul:  #1448A0;
+
+  /* Tema oscuro por defecto (black glass) */
+  --color-fondo: #000000;
+  --color-fondo-2: #000000;
+  --color-card: rgba(0, 0, 0, 0.56);
+  --color-card-strong: rgba(0, 0, 0, 0.68);
+  --color-card-soft: rgba(0, 0, 0, 0.42);
+  --color-card-soft-2: rgba(0, 0, 0, 0.5);
+  --color-borde: rgba(255, 255, 255, 0.22);
+  --shadow-glass: 0 30px 74px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  --color-texto: #ffffff;
+  --color-texto2: #e5ebf7;
+  --color-pill-neutral-bg: rgba(158, 176, 204, 0.16);
+  --color-pill-neutral-text: #dbe4f3;
+  --color-pill-success-bg: rgba(14, 160, 102, 0.2);
+  --color-pill-success-text: #c8f6df;
+  --color-pill-warn-bg: rgba(170, 110, 12, 0.2);
+  --color-pill-warn-text: #fde5bc;
+  --color-pill-danger-bg: rgba(176, 32, 50, 0.22);
+  --color-pill-danger-text: #ffd3d8;
+}
+
+[data-theme="light"] {
+  --color-fondo: #ffffff;
+  --color-fondo-2: #ffffff;
+  --color-card: rgba(255, 255, 255, 0.64);
+  --color-card-strong: rgba(255, 255, 255, 0.78);
+  --color-card-soft: rgba(255, 255, 255, 0.52);
+  --color-card-soft-2: rgba(255, 255, 255, 0.62);
+  --color-borde: rgba(255, 255, 255, 0.62);
+  --shadow-glass: 0 20px 48px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.86);
+
+  --color-texto: #111423;
+  --color-texto2: #525b6e;
+  --color-pill-neutral-bg: rgba(17, 24, 39, 0.06);
+  --color-pill-neutral-text: #334155;
+  --color-pill-success-bg: rgba(16, 185, 129, 0.14);
+  --color-pill-success-text: #166534;
+  --color-pill-warn-bg: rgba(245, 158, 11, 0.16);
+  --color-pill-warn-text: #9a5b07;
+  --color-pill-danger-bg: rgba(239, 68, 68, 0.14);
+  --color-pill-danger-text: #991b1b;
+}
+
+@theme inline {
+  --color-sgs-rojo:  var(--color-sgs-rojo);
+  --color-sgs-verde: var(--color-sgs-verde);
+  --color-sgs-ambar: var(--color-sgs-ambar);
+  --color-sgs-azul:  var(--color-sgs-azul);
+  --color-fondo:     var(--color-fondo);
+  --color-card:      var(--color-card);
+  --color-borde:     var(--color-borde);
+  --color-texto:     var(--color-texto);
+  --color-texto2:    var(--color-texto2);
+}
+
+html {
+  font-size: 16.5px;
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.app-bg {
+  min-height: 100vh;
+  position: relative;
+}
+
+.app-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    radial-gradient(64rem 32rem at -6% -12%, rgba(0, 0, 0, 0.12), transparent 74%),
+    radial-gradient(56rem 30rem at 106% 6%, rgba(0, 0, 0, 0.14), transparent 76%),
+    url("/bg-glass-dark.svg");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  opacity: 0.96;
+}
+
+.app-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(125% 88% at 50% 124%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+}
+
+[data-theme="light"] body {
+  background: #ffffff;
+}
+
+[data-theme="light"] .app-bg::before {
+  background-image:
+    radial-gradient(68rem 34rem at -6% -12%, rgba(255, 255, 255, 0.14), transparent 74%),
+    radial-gradient(58rem 30rem at 106% 8%, rgba(255, 255, 255, 0.16), transparent 76%),
+    url("/bg-glass-light.svg");
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  opacity: 0.98;
+}
+
+[data-theme="light"] .app-bg::after {
+  background: radial-gradient(140% 86% at 50% 128%, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.38));
+}
+
+.glass-panel {
+  background: var(--color-card);
+  border-color: var(--color-borde);
+  backdrop-filter: blur(32px) saturate(1.08);
+  -webkit-backdrop-filter: blur(32px) saturate(1.08);
+}
+
+.glass-panel-strong {
+  background: var(--color-card-strong);
+  border-color: var(--color-borde);
+  backdrop-filter: blur(38px) saturate(1.1);
+  -webkit-backdrop-filter: blur(38px) saturate(1.1);
+}
+
+.glass-border {
+  border: 1px solid var(--color-borde);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 1;
+}
+
+.glass-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.chip-neutral {
+  background: var(--color-pill-neutral-bg);
+  color: var(--color-pill-neutral-text);
+}
+
+.chip-success {
+  background: var(--color-pill-success-bg);
+  color: var(--color-pill-success-text);
+}
+
+.chip-warn {
+  background: var(--color-pill-warn-bg);
+  color: var(--color-pill-warn-text);
+}
+
+.chip-danger {
+  background: var(--color-pill-danger-bg);
+  color: var(--color-pill-danger-text);
+}
+
+.ui-panel {
+  background: var(--color-card-strong);
+  border: 1px solid var(--color-borde);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(34px) saturate(1.12);
+  -webkit-backdrop-filter: blur(34px) saturate(1.12);
+}
+
+.ui-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ui-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.ui-panel-soft {
+  background: var(--color-card-soft-2);
+  border: 1px solid var(--color-borde);
+  border-radius: 0.75rem;
+}
+
+.ui-title {
+  color: var(--color-texto);
+  font-weight: 600;
+}
+
+.ui-muted {
+  color: var(--color-texto2);
+}
+
+.ui-input {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--color-borde) 88%, transparent 12%);
+  background: color-mix(in srgb, var(--color-card-soft-2) 72%, transparent 28%);
+  color: var(--color-texto);
+  border-radius: 0.625rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.ui-input:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--color-sgs-rojo) 72%, var(--color-borde) 28%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-sgs-rojo) 20%, transparent 80%);
+}
+
+.ui-btn-primary {
+  background: linear-gradient(135deg, var(--color-sgs-rojo), #9a0015);
+  color: #fff;
+  border-radius: 0.625rem;
+  font-weight: 600;
+}
+
+.ui-btn-ghost {
+  border: 1px solid color-mix(in srgb, var(--color-borde) 88%, transparent 12%);
+  background: color-mix(in srgb, var(--color-card-soft-2) 62%, transparent 38%);
+  color: var(--color-texto2);
+  border-radius: 0.625rem;
+}
+
+.overlay-strong {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.app-shell .bg-white {
+  background: var(--color-card-strong) !important;
+  backdrop-filter: blur(34px) saturate(1.12);
+  -webkit-backdrop-filter: blur(34px) saturate(1.12);
+}
+
+.app-shell .bg-zinc-50,
+.app-shell .bg-zinc-100,
+.app-shell .bg-red-50,
+.app-shell .bg-amber-50,
+.app-shell .bg-blue-50,
+.app-shell .bg-green-50,
+.app-shell .bg-emerald-50,
+.app-shell .bg-violet-50 {
+  background: var(--color-card) !important;
+}
+
+.app-shell .bg-zinc-200,
+.app-shell .bg-red-100,
+.app-shell .bg-amber-100,
+.app-shell .bg-blue-100,
+.app-shell .bg-green-100,
+.app-shell .bg-emerald-100,
+.app-shell .bg-violet-100,
+.app-shell :is(div, section, article, aside, header).bg-zinc-900 {
+  background: var(--color-card-strong) !important;
+}
+
+.app-shell .hover\:bg-zinc-50:hover,
+.app-shell .hover\:bg-zinc-100:hover,
+.app-shell .hover\:bg-zinc-200:hover,
+.app-shell .hover\:bg-red-50:hover,
+.app-shell .hover\:bg-amber-50:hover,
+.app-shell .hover\:bg-blue-50:hover,
+.app-shell .hover\:bg-green-50:hover,
+.app-shell .hover\:bg-emerald-50:hover,
+.app-shell .hover\:bg-violet-50:hover {
+  background: var(--color-card-soft-2) !important;
+}
+
+.app-shell .text-zinc-900,
+.app-shell .text-zinc-800,
+.app-shell .text-zinc-700 {
+  color: var(--color-texto) !important;
+}
+
+.app-shell .text-zinc-600,
+.app-shell .text-zinc-500,
+.app-shell .text-zinc-400 {
+  color: var(--color-texto2) !important;
+}
+
+.app-shell .border-zinc-50,
+.app-shell .border-zinc-100,
+.app-shell .border-zinc-200,
+.app-shell .border-zinc-300,
+.app-shell .border-red-100,
+.app-shell .border-red-200,
+.app-shell .border-red-300,
+.app-shell .border-amber-200,
+.app-shell .border-blue-100,
+.app-shell .border-blue-200,
+.app-shell .border-green-200,
+.app-shell .border-violet-100,
+.app-shell .border-violet-200,
+.app-shell .border-violet-300 {
+  border-color: var(--color-borde) !important;
+}
+
+.app-shell :is(div, section, article, aside, header).bg-white.border,
+.app-shell :is(div, section, article, aside, header).bg-zinc-50.border,
+.app-shell :is(div, section, article, aside, header).bg-zinc-100.border,
+.app-shell :is(div, section, article, aside, header).bg-zinc-200.border,
+.app-shell :is(div, section, article, aside, header).bg-red-50.border,
+.app-shell :is(div, section, article, aside, header).bg-amber-50.border,
+.app-shell :is(div, section, article, aside, header).bg-blue-50.border,
+.app-shell :is(div, section, article, aside, header).bg-green-50.border,
+.app-shell :is(div, section, article, aside, header).bg-emerald-50.border,
+.app-shell :is(div, section, article, aside, header).bg-violet-50.border,
+.app-shell :is(div, section, article, aside, header).bg-red-100.border,
+.app-shell :is(div, section, article, aside, header).bg-amber-100.border,
+.app-shell :is(div, section, article, aside, header).bg-blue-100.border,
+.app-shell :is(div, section, article, aside, header).bg-green-100.border,
+.app-shell :is(div, section, article, aside, header).bg-emerald-100.border,
+.app-shell :is(div, section, article, aside, header).bg-violet-100.border,
+.app-shell :is(div, section, article, aside, header).bg-zinc-900.border {
+  box-shadow: var(--shadow-glass) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-shell :is(div, section, article, aside, header).bg-white.border::before,
+.app-shell :is(div, section, article, aside, header).bg-zinc-50.border::before,
+.app-shell :is(div, section, article, aside, header).bg-zinc-100.border::before,
+.app-shell :is(div, section, article, aside, header).bg-zinc-200.border::before,
+.app-shell :is(div, section, article, aside, header).bg-red-50.border::before,
+.app-shell :is(div, section, article, aside, header).bg-amber-50.border::before,
+.app-shell :is(div, section, article, aside, header).bg-blue-50.border::before,
+.app-shell :is(div, section, article, aside, header).bg-green-50.border::before,
+.app-shell :is(div, section, article, aside, header).bg-emerald-50.border::before,
+.app-shell :is(div, section, article, aside, header).bg-violet-50.border::before,
+.app-shell :is(div, section, article, aside, header).bg-red-100.border::before,
+.app-shell :is(div, section, article, aside, header).bg-amber-100.border::before,
+.app-shell :is(div, section, article, aside, header).bg-blue-100.border::before,
+.app-shell :is(div, section, article, aside, header).bg-green-100.border::before,
+.app-shell :is(div, section, article, aside, header).bg-emerald-100.border::before,
+.app-shell :is(div, section, article, aside, header).bg-violet-100.border::before,
+.app-shell :is(div, section, article, aside, header).bg-zinc-900.border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app-shell :is(div, section, article, aside, header).bg-white.border::after,
+.app-shell :is(div, section, article, aside, header).bg-zinc-50.border::after,
+.app-shell :is(div, section, article, aside, header).bg-zinc-100.border::after,
+.app-shell :is(div, section, article, aside, header).bg-zinc-200.border::after,
+.app-shell :is(div, section, article, aside, header).bg-red-50.border::after,
+.app-shell :is(div, section, article, aside, header).bg-amber-50.border::after,
+.app-shell :is(div, section, article, aside, header).bg-blue-50.border::after,
+.app-shell :is(div, section, article, aside, header).bg-green-50.border::after,
+.app-shell :is(div, section, article, aside, header).bg-emerald-50.border::after,
+.app-shell :is(div, section, article, aside, header).bg-violet-50.border::after,
+.app-shell :is(div, section, article, aside, header).bg-red-100.border::after,
+.app-shell :is(div, section, article, aside, header).bg-amber-100.border::after,
+.app-shell :is(div, section, article, aside, header).bg-blue-100.border::after,
+.app-shell :is(div, section, article, aside, header).bg-green-100.border::after,
+.app-shell :is(div, section, article, aside, header).bg-emerald-100.border::after,
+.app-shell :is(div, section, article, aside, header).bg-violet-100.border::after,
+.app-shell :is(div, section, article, aside, header).bg-zinc-900.border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.app-shell .shadow-xl,
+.app-shell .shadow-2xl {
+  box-shadow: var(--shadow-glass) !important;
+}
+
+.surface-title {
+  color: var(--color-texto);
+}
+
+.surface-subtitle {
+  color: var(--color-texto2);
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-borde); border-radius: 3px; }

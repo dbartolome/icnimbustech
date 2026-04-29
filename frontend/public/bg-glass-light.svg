@@ -1,0 +1,41 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#FBFCFE"/>
+      <stop offset="1" stop-color="#F6F8FC"/>
+    </linearGradient>
+    <linearGradient id="metalA" x1="120" y1="320" x2="1750" y2="690" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EEF3F9" stop-opacity="0.42"/>
+      <stop offset="0.28" stop-color="#B1BBC8" stop-opacity="0.46"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.62"/>
+      <stop offset="0.74" stop-color="#A8B3C1" stop-opacity="0.46"/>
+      <stop offset="1" stop-color="#E9EEF6" stop-opacity="0.42"/>
+    </linearGradient>
+    <linearGradient id="metalB" x1="80" y1="500" x2="1860" y2="790" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#DDE5EF" stop-opacity="0.34"/>
+      <stop offset="0.52" stop-color="#FFFFFF" stop-opacity="0.46"/>
+      <stop offset="1" stop-color="#D3DCE8" stop-opacity="0.34"/>
+    </linearGradient>
+    <filter id="soft" x="-200" y="120" width="2320" height="940" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="glow" x="-220" y="120" width="2360" height="960" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+
+  <g filter="url(#glow)" opacity="0.66">
+    <path d="M-140 470C90 320 250 610 470 500C690 390 810 300 1030 420C1250 540 1370 390 1580 460C1790 530 1910 430 2080 500" stroke="url(#metalA)" stroke-width="62" stroke-linecap="round"/>
+  </g>
+
+  <g filter="url(#soft)">
+    <path d="M-120 520C110 390 280 670 520 550C760 430 860 360 1080 460C1300 560 1420 440 1630 510C1840 580 1960 490 2120 540" stroke="url(#metalA)" stroke-width="28" stroke-linecap="round"/>
+    <path d="M-90 635C150 520 320 790 560 680C800 570 910 500 1140 580C1370 660 1490 550 1700 620C1910 690 2020 610 2160 660" stroke="url(#metalB)" stroke-width="20" stroke-linecap="round"/>
+    <path d="M-70 720C170 620 340 870 590 770C840 670 960 600 1180 680C1400 760 1520 650 1740 710C1960 770 2070 710 2200 750" stroke="url(#metalB)" stroke-width="15" stroke-linecap="round" opacity="0.9"/>
+  </g>
+
+  <rect width="1920" height="1080" fill="#FFFFFF" opacity="0.08"/>
+</svg>
